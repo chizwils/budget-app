@@ -10,6 +10,11 @@
       "StackName": "amplify-amplify73ed4e2f30504-staging-233623",
       "StackId": "arn:aws:cloudformation:us-east-1:449220348163:stack/amplify-amplify73ed4e2f30504-staging-233623/fa763d10-6862-11ed-8b16-122b236ae7c1",
       "AmplifyAppId": "d2oy02ky5r8ydt"
+    },
+    "categories": {
+      "api": {
+        "budgetapp": {}
+      }
     }
   }
 }
