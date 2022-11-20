@@ -1,5 +1,6 @@
 {
   "AppSyncApiName": "budgetapp",
   "DynamoDBBillingMode": "PAY_PER_REQUEST",
-  "DynamoDBEnableServerSideEncryption": false
+  "DynamoDBEnableServerSideEncryption": false,
+  "AuthModeLastUpdated": "2022-11-20T02:52:01.965Z"
 }
