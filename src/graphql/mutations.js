@@ -1,44 +1,68 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const createTodo = /* GraphQL */ `
-  mutation CreateTodo(
-    $input: CreateTodoInput!
-    $condition: ModelTodoConditionInput
+export const createDebt = /* GraphQL */ `
+  mutation CreateDebt(
+    $input: CreateDebtInput!
+    $condition: ModelDebtConditionInput
   ) {
-    createTodo(input: $input, condition: $condition) {
+    createDebt(input: $input, condition: $condition) {
       id
       name
-      description
       createdAt
+      currentAmountOwed
+      initialAmountOwed
+      isPaidOf
+      payments {
+        id
+        amountPaid
+        createdAt
+        updatedAt
+      }
       updatedAt
     }
   }
 `;
-export const updateTodo = /* GraphQL */ `
-  mutation UpdateTodo(
-    $input: UpdateTodoInput!
-    $condition: ModelTodoConditionInput
+export const updateDebt = /* GraphQL */ `
+  mutation UpdateDebt(
+    $input: UpdateDebtInput!
+    $condition: ModelDebtConditionInput
   ) {
-    updateTodo(input: $input, condition: $condition) {
+    updateDebt(input: $input, condition: $condition) {
       id
       name
-      description
       createdAt
+      currentAmountOwed
+      initialAmountOwed
+      isPaidOf
+      payments {
+        id
+        amountPaid
+        createdAt
+        updatedAt
+      }
       updatedAt
     }
   }
 `;
-export const deleteTodo = /* GraphQL */ `
-  mutation DeleteTodo(
-    $input: DeleteTodoInput!
-    $condition: ModelTodoConditionInput
+export const deleteDebt = /* GraphQL */ `
+  mutation DeleteDebt(
+    $input: DeleteDebtInput!
+    $condition: ModelDebtConditionInput
   ) {
-    deleteTodo(input: $input, condition: $condition) {
+    deleteDebt(input: $input, condition: $condition) {
       id
       name
-      description
       createdAt
+      currentAmountOwed
+      initialAmountOwed
+      isPaidOf
+      payments {
+        id
+        amountPaid
+        createdAt
+        updatedAt
+      }
       updatedAt
     }
   }

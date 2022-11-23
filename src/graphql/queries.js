@@ -1,29 +1,39 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const getTodo = /* GraphQL */ `
-  query GetTodo($id: ID!) {
-    getTodo(id: $id) {
+export const getDebt = /* GraphQL */ `
+  query GetDebt($id: ID!) {
+    getDebt(id: $id) {
       id
       name
-      description
       createdAt
+      currentAmountOwed
+      initialAmountOwed
+      isPaidOf
+      payments {
+        id
+        amountPaid
+        createdAt
+        updatedAt
+      }
       updatedAt
     }
   }
 `;
-export const listTodos = /* GraphQL */ `
-  query ListTodos(
-    $filter: ModelTodoFilterInput
+export const listDebts = /* GraphQL */ `
+  query ListDebts(
+    $filter: ModelDebtFilterInput
     $limit: Int
     $nextToken: String
   ) {
-    listTodos(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    listDebts(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
         name
-        description
         createdAt
+        currentAmountOwed
+        initialAmountOwed
+        isPaidOf
         updatedAt
       }
       nextToken

@@ -1,35 +1,59 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const onCreateTodo = /* GraphQL */ `
-  subscription OnCreateTodo($filter: ModelSubscriptionTodoFilterInput) {
-    onCreateTodo(filter: $filter) {
+export const onCreateDebt = /* GraphQL */ `
+  subscription OnCreateDebt($filter: ModelSubscriptionDebtFilterInput) {
+    onCreateDebt(filter: $filter) {
       id
       name
-      description
       createdAt
+      currentAmountOwed
+      initialAmountOwed
+      isPaidOf
+      payments {
+        id
+        amountPaid
+        createdAt
+        updatedAt
+      }
       updatedAt
     }
   }
 `;
-export const onUpdateTodo = /* GraphQL */ `
-  subscription OnUpdateTodo($filter: ModelSubscriptionTodoFilterInput) {
-    onUpdateTodo(filter: $filter) {
+export const onUpdateDebt = /* GraphQL */ `
+  subscription OnUpdateDebt($filter: ModelSubscriptionDebtFilterInput) {
+    onUpdateDebt(filter: $filter) {
       id
       name
-      description
       createdAt
+      currentAmountOwed
+      initialAmountOwed
+      isPaidOf
+      payments {
+        id
+        amountPaid
+        createdAt
+        updatedAt
+      }
       updatedAt
     }
   }
 `;
-export const onDeleteTodo = /* GraphQL */ `
-  subscription OnDeleteTodo($filter: ModelSubscriptionTodoFilterInput) {
-    onDeleteTodo(filter: $filter) {
+export const onDeleteDebt = /* GraphQL */ `
+  subscription OnDeleteDebt($filter: ModelSubscriptionDebtFilterInput) {
+    onDeleteDebt(filter: $filter) {
       id
       name
-      description
       createdAt
+      currentAmountOwed
+      initialAmountOwed
+      isPaidOf
+      payments {
+        id
+        amountPaid
+        createdAt
+        updatedAt
+      }
       updatedAt
     }
   }

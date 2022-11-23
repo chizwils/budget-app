@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { API } from "aws-amplify";
+import { createDebt } from '../graphql/mutations';
 
 import {  Link} from "react-router-dom";
 //create a redux to store all 
@@ -9,11 +11,58 @@ export const Home =()=>{
   
     const onChange =(e)=>{
       setBill({...bill,id:state.length+1,[e.target.name]: e.target.value,})
+
+
+
     }
-    const handleClick =(e)=>{
+
+//create a debt 
+// async function createNote(event) {
+//     event.preventDefault();
+//     const form = new FormData(event.target);
+//     const data = {
+//       name: form.get("name"),
+//       description: form.get("description"),
+//     };
+//     await API.graphql({
+//       query: createNoteMutation,
+//       variables: { input: data },
+//     });
+//     fetchNotes();
+//     event.target.reset();
+//   }
+// }
+// const newDebt = await API.graphql({
+//     query: createDebt,
+//     variables: {
+//         input: {
+// 		"name": "Lorem ipsum dolor sit amet",
+// 		"createdAt": "Lorem ipsum dolor sit amet",
+// 		"currentAmountOwed": 123.45,
+// 		"initialAmountOwed": 123.45,
+// 		"isPaidOf": true,
+// 		"payments": []
+// 	}
+//     }
+// });
+
+    const handleClick = async (e)=>{
       e.preventDefault()
       setState([...state, bill])
       setBill({bill:'',price:''})
+      await API.graphql({
+              query: createDebt,
+              variables: { input: {
+                "name": "Lorem ipsum dolor sit amet",
+                "createdAt": "Lorem ipsum dolor sit amet",
+                "currentAmountOwed": 123.45,
+                "initialAmountOwed": 123.45,
+                "isPaidOf": true,
+                "payments": []
+            } },
+            });
+
+      
     }
     console.log(bill)
     console.log(state)
