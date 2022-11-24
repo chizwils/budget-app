@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { API } from "aws-amplify";
 import { createDebt } from '../graphql/mutations';
-
+import { listDebts } from '../graphql/queries';
 import {  Link} from "react-router-dom";
 //create a redux to store all 
 
@@ -45,7 +45,11 @@ export const Home =()=>{
 // 	}
 //     }
 // });
+const listingDebts = async()=>{
+    const apiData = await API.graphql({ query: listDebts });
+   console.log(apiData, 'hois')
 
+}
     const handleClick = async (e)=>{
       e.preventDefault()
       setState([...state, bill])
@@ -73,7 +77,7 @@ export const Home =()=>{
           <input onChange={onChange} name='price' placeholder='insert price in number' value={bill.price}/>
           <button >Add</button>
         </form>
-  
+        <button onClick={listDebts}>List notes</button>
         <h1>List of bills and prices</h1>
       
         <div>

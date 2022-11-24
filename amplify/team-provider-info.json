@@ -14,6 +14,12 @@
     "categories": {
       "api": {
         "budgetapp": {}
+      },
+      "auth": {
+        "budgetappcea33ab1": {}
+      },
+      "storage": {
+        "writeofstorage": {}
       }
     }
   }
