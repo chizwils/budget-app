@@ -77,7 +77,7 @@ const listingDebts = async()=>{
           <input onChange={onChange} name='price' placeholder='insert price in number' value={bill.price}/>
           <button >Add</button>
         </form>
-        <button onClick={listDebts}>List notes</button>
+        <button onClick={listingDebts}>List notes</button>
         <h1>List of bills and prices</h1>
       
         <div>
