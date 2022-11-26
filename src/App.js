@@ -4,7 +4,17 @@ import { useState } from 'react';
 import { ItemDetails } from './pages/ItemDetails';
 import { Home } from './pages/Home';
 import { BrowserRouter, Routes, Route, Link} from "react-router-dom";
-function App() {
+import "@aws-amplify/ui-react/styles.css";
+import {
+  withAuthenticator,
+  Button,
+  Heading,
+  Image,
+  View,
+  Card,
+} from "@aws-amplify/ui-react";
+
+function App({signOut}) {
 //@todo
 /*
   onchange for input functionality 
@@ -30,8 +40,9 @@ function App() {
 */ 
 
   return (
+
     <BrowserRouter>
-    <div className="App">
+    <View className="App">
     
       <Routes>
       <Route exact path="/" element={<Home />}/>
@@ -39,11 +50,12 @@ function App() {
 
       </Routes>
       {/* /company/:${item.id}:/${item.bill}:/${item.price} */}
+      <Button onClick={signOut}>Sign Out</Button>
       
-      
-    </div>
+    </View>
     </BrowserRouter>
+
   );
 }
 
-export default App;
+export default withAuthenticator(App);

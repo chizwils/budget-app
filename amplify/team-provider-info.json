@@ -15,11 +15,11 @@
       "api": {
         "budgetapp": {}
       },
-      "auth": {
-        "budgetappcea33ab1": {}
-      },
       "storage": {
         "writeofstorage": {}
+      },
+      "auth": {
+        "budgetapp487b7f6b": {}
       }
     }
   }

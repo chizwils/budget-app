@@ -23,7 +23,7 @@
     }
   },
   "auth": {
-    "budgetappcea33ab1": {
+    "budgetapp487b7f6b": {
       "service": "Cognito",
       "providerPlugin": "awscloudformation",
       "dependsOn": [],
