@@ -46,7 +46,7 @@ function App({signOut}) {
     
       <Routes>
       <Route exact path="/" element={<Home />}/>
-      <Route  path="/company/:id/:bill/:price" element={<ItemDetails/>}/>
+      <Route  path="/company/:id" element={<ItemDetails/>}/>
 
       </Routes>
       {/* /company/:${item.id}:/${item.bill}:/${item.price} */}

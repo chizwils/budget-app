@@ -34,6 +34,12 @@ export const listDebts = /* GraphQL */ `
         currentAmountOwed
         initialAmountOwed
         isPaidOf
+        payments {
+          id
+          amountPaid
+          createdAt
+          updatedAt
+        }
         updatedAt
       }
       nextToken
