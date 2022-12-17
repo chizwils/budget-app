@@ -18,7 +18,10 @@ export const UpdateForm = ({ currentState, onChange, update }) => {
           <button onClick={toggle}>Done</button>
         </>
       ) : (
-        <button onClick={toggle}>edit</button>
+        <div>
+          ${currentState}
+          <button onClick={toggle}>edit</button>
+        </div>
       )}
     </div>
   );
