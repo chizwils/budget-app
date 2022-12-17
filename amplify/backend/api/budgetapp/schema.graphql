@@ -1,8 +1,9 @@
-type Payments {
-  id: ID
+type Recurring @model @auth(rules: [{allow: public}]) {
+  id: ID!
   amountPaid: Float
   createdAt: String
   updatedAt: String
+  debtID: ID! @index(name: "byDebt")
 }
 
 type Debt @model @auth(rules: [{allow: public}]) {
@@ -10,8 +11,8 @@ type Debt @model @auth(rules: [{allow: public}]) {
   name: String!
   createdAt: String
   currentAmountOwed: Float
-  initialAmountOwed: Float
   isPaidOf: Boolean
-  payments: [Payments]
+  payments: [Recurring] @hasMany(indexName: "byDebt", fields: ["id"])
+  initialAmountOwed: Float
 }
  

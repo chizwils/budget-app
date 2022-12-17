@@ -1,6 +1,45 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
+export const onCreateRecurring = /* GraphQL */ `
+  subscription OnCreateRecurring(
+    $filter: ModelSubscriptionRecurringFilterInput
+  ) {
+    onCreateRecurring(filter: $filter) {
+      id
+      amountPaid
+      createdAt
+      updatedAt
+      debtID
+    }
+  }
+`;
+export const onUpdateRecurring = /* GraphQL */ `
+  subscription OnUpdateRecurring(
+    $filter: ModelSubscriptionRecurringFilterInput
+  ) {
+    onUpdateRecurring(filter: $filter) {
+      id
+      amountPaid
+      createdAt
+      updatedAt
+      debtID
+    }
+  }
+`;
+export const onDeleteRecurring = /* GraphQL */ `
+  subscription OnDeleteRecurring(
+    $filter: ModelSubscriptionRecurringFilterInput
+  ) {
+    onDeleteRecurring(filter: $filter) {
+      id
+      amountPaid
+      createdAt
+      updatedAt
+      debtID
+    }
+  }
+`;
 export const onCreateDebt = /* GraphQL */ `
   subscription OnCreateDebt($filter: ModelSubscriptionDebtFilterInput) {
     onCreateDebt(filter: $filter) {
@@ -8,14 +47,18 @@ export const onCreateDebt = /* GraphQL */ `
       name
       createdAt
       currentAmountOwed
-      initialAmountOwed
       isPaidOf
       payments {
-        id
-        amountPaid
-        createdAt
-        updatedAt
+        items {
+          id
+          amountPaid
+          createdAt
+          updatedAt
+          debtID
+        }
+        nextToken
       }
+      initialAmountOwed
       updatedAt
     }
   }
@@ -27,14 +70,18 @@ export const onUpdateDebt = /* GraphQL */ `
       name
       createdAt
       currentAmountOwed
-      initialAmountOwed
       isPaidOf
       payments {
-        id
-        amountPaid
-        createdAt
-        updatedAt
+        items {
+          id
+          amountPaid
+          createdAt
+          updatedAt
+          debtID
+        }
+        nextToken
       }
+      initialAmountOwed
       updatedAt
     }
   }
@@ -46,14 +93,18 @@ export const onDeleteDebt = /* GraphQL */ `
       name
       createdAt
       currentAmountOwed
-      initialAmountOwed
       isPaidOf
       payments {
-        id
-        amountPaid
-        createdAt
-        updatedAt
+        items {
+          id
+          amountPaid
+          createdAt
+          updatedAt
+          debtID
+        }
+        nextToken
       }
+      initialAmountOwed
       updatedAt
     }
   }

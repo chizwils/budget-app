@@ -1,26 +1,38 @@
 import { ModelInit, MutableModel, __modelMeta__, ManagedIdentifier } from "@aws-amplify/datastore";
 // @ts-ignore
-import { LazyLoading, LazyLoadingDisabled } from "@aws-amplify/datastore";
+import { LazyLoading, LazyLoadingDisabled, AsyncCollection } from "@aws-amplify/datastore";
 
 
 
-type EagerPayments = {
-  readonly id?: string | null;
+
+
+type EagerRecurring = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<Recurring, 'id'>;
+  };
+  readonly id: string;
   readonly amountPaid?: number | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
+  readonly debtID: string;
 }
 
-type LazyPayments = {
-  readonly id?: string | null;
+type LazyRecurring = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<Recurring, 'id'>;
+  };
+  readonly id: string;
   readonly amountPaid?: number | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
+  readonly debtID: string;
 }
 
-export declare type Payments = LazyLoading extends LazyLoadingDisabled ? EagerPayments : LazyPayments
+export declare type Recurring = LazyLoading extends LazyLoadingDisabled ? EagerRecurring : LazyRecurring
 
-export declare const Payments: (new (init: ModelInit<Payments>) => Payments)
+export declare const Recurring: (new (init: ModelInit<Recurring>) => Recurring) & {
+  copyOf(source: Recurring, mutator: (draft: MutableModel<Recurring>) => MutableModel<Recurring> | void): Recurring;
+}
 
 type EagerDebt = {
   readonly [__modelMeta__]: {
@@ -31,9 +43,9 @@ type EagerDebt = {
   readonly name: string;
   readonly createdAt?: string | null;
   readonly currentAmountOwed?: number | null;
-  readonly initialAmountOwed?: number | null;
   readonly isPaidOf?: boolean | null;
-  readonly payments?: (Payments | null)[] | null;
+  readonly payments?: (Recurring | null)[] | null;
+  readonly initialAmountOwed?: number | null;
   readonly updatedAt?: string | null;
 }
 
@@ -46,9 +58,9 @@ type LazyDebt = {
   readonly name: string;
   readonly createdAt?: string | null;
   readonly currentAmountOwed?: number | null;
-  readonly initialAmountOwed?: number | null;
   readonly isPaidOf?: boolean | null;
-  readonly payments?: (Payments | null)[] | null;
+  readonly payments: AsyncCollection<Recurring>;
+  readonly initialAmountOwed?: number | null;
   readonly updatedAt?: string | null;
 }
 

@@ -1,6 +1,48 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
+export const createRecurring = /* GraphQL */ `
+  mutation CreateRecurring(
+    $input: CreateRecurringInput!
+    $condition: ModelRecurringConditionInput
+  ) {
+    createRecurring(input: $input, condition: $condition) {
+      id
+      amountPaid
+      createdAt
+      updatedAt
+      debtID
+    }
+  }
+`;
+export const updateRecurring = /* GraphQL */ `
+  mutation UpdateRecurring(
+    $input: UpdateRecurringInput!
+    $condition: ModelRecurringConditionInput
+  ) {
+    updateRecurring(input: $input, condition: $condition) {
+      id
+      amountPaid
+      createdAt
+      updatedAt
+      debtID
+    }
+  }
+`;
+export const deleteRecurring = /* GraphQL */ `
+  mutation DeleteRecurring(
+    $input: DeleteRecurringInput!
+    $condition: ModelRecurringConditionInput
+  ) {
+    deleteRecurring(input: $input, condition: $condition) {
+      id
+      amountPaid
+      createdAt
+      updatedAt
+      debtID
+    }
+  }
+`;
 export const createDebt = /* GraphQL */ `
   mutation CreateDebt(
     $input: CreateDebtInput!
@@ -11,14 +53,18 @@ export const createDebt = /* GraphQL */ `
       name
       createdAt
       currentAmountOwed
-      initialAmountOwed
       isPaidOf
       payments {
-        id
-        amountPaid
-        createdAt
-        updatedAt
+        items {
+          id
+          amountPaid
+          createdAt
+          updatedAt
+          debtID
+        }
+        nextToken
       }
+      initialAmountOwed
       updatedAt
     }
   }
@@ -33,14 +79,18 @@ export const updateDebt = /* GraphQL */ `
       name
       createdAt
       currentAmountOwed
-      initialAmountOwed
       isPaidOf
       payments {
-        id
-        amountPaid
-        createdAt
-        updatedAt
+        items {
+          id
+          amountPaid
+          createdAt
+          updatedAt
+          debtID
+        }
+        nextToken
       }
+      initialAmountOwed
       updatedAt
     }
   }
@@ -55,14 +105,18 @@ export const deleteDebt = /* GraphQL */ `
       name
       createdAt
       currentAmountOwed
-      initialAmountOwed
       isPaidOf
       payments {
-        id
-        amountPaid
-        createdAt
-        updatedAt
+        items {
+          id
+          amountPaid
+          createdAt
+          updatedAt
+          debtID
+        }
+        nextToken
       }
+      initialAmountOwed
       updatedAt
     }
   }

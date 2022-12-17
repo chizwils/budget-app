@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { API } from "aws-amplify";
-import { getDebt } from "../graphql/queries";
+import { getDebt, listRecurrings } from "../graphql/queries";
 import { updateDebt } from "../graphql/mutations";
 import { UpdateForm } from "./updateForm";
 import { v4 as uuid } from "uuid";
@@ -13,13 +13,13 @@ export const ItemDetails = () => {
   const [total, setTotal] = useState();
   const fetchByID = async () => {
     const apiData = await API.graphql({
-      query: getDebt,
-      variables: { id: item.id },
+      query: listRecurrings,
+      variables: { debtID: item.id },
     });
     console.log(apiData, "id");
-    setInfo(apiData?.data?.getDebt.initialAmountOwed);
-    setTotal(apiData?.data?.getDebt.currentAmountOwed);
-    setAllPaidAmount(apiData.data?.getDebt?.payments);
+    setInfo(apiData?.data?.getDebt.initialAmountOwed || 0);
+    setTotal(apiData?.data?.getDebt.currentAmountOwed || 0);
+    setAllPaidAmount(apiData.data?.getDebt?.payments || 0);
     console.log(allPaidaMount, "io");
   };
   useEffect(() => {
@@ -75,7 +75,18 @@ export const ItemDetails = () => {
     // fetchByID();
     setPaid({});
   };
-  const updatePaymentById = (id) => {};
+  const updatePaymentById = async (id) => {
+    //find payment bt
+    await API.graphql({
+      query: updateDebt,
+      variables: {
+        input: {
+          id: item.id,
+          payments: [...allPaidaMount, paid],
+        },
+      },
+    });
+  };
 
   const updatePayment = (id) => {
     console.log(id, "the");
