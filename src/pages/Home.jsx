@@ -86,17 +86,18 @@ export const Home = () => {
   console.log(bill);
   const updateAmount = (id) => {
     console.log(id, "po");
-    const newItem = state.map((item) => {
-      if (item.id === id) {
-        const updateItem = {
-          ...item,
-          isComplete: item.isComplete,
-        };
-        return updateItem;
-      }
-      return newItem;
-    });
-    setState(newItem);
+    // const newItem = state.map((item) => {
+    //   if (item.id === id) {
+    //     const updateItem = {
+    //       ...item,
+    //       isComplete: item.isComplete,
+    //     };
+    //     return updateItem;
+    //   }
+    //   return newItem;
+
+    // });
+    // setState(newItem);
   };
   const deletingDebt = async (id) => {
     console.log(id, "op");
@@ -143,7 +144,7 @@ export const Home = () => {
                   placeholder={`update $${item.initialAmountOwed}`}
                   type="text"
                 />
-
+                <button>update</button>
                 <div>
                   <button onClick={() => updateAmount(item.id)}>edit</button>
                   <button onClick={() => deletingDebt(item.id)}>delete</button>

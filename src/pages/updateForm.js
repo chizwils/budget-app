@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export const UpdateForm = ({ currentState, onChange, update }) => {
+export const UpdateForm = ({ currentState, onChange, update, deleteThis }) => {
   const [isVisible, setIsVisible] = useState(false);
   const toggle = () => {
     setIsVisible(!isVisible);
@@ -21,6 +21,7 @@ export const UpdateForm = ({ currentState, onChange, update }) => {
         <div>
           ${currentState}
           <button onClick={toggle}>edit</button>
+          <button onClick={deleteThis}>delete</button>
         </div>
       )}
     </div>
