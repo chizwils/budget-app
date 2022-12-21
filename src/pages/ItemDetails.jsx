@@ -41,6 +41,7 @@ export const ItemDetails = () => {
     //setTotal(apiData?.data?.getDebt.currentAmountOwed || 0);
     //setTotal(apiData?.data?.getDebt.currentAmountOwed || 0);
     setTotal(apiData?.data?.getDebt.currentAmountOwed);
+    setAllPaidAmount(apiData?.data?.getDebt.payments.items);
     console.log(apiData, "data");
     setInfo(apiData.data?.getDebt);
     console.log(info, "info");
@@ -49,7 +50,7 @@ export const ItemDetails = () => {
   };
   useEffect(() => {
     fetchByID();
-    fetchPayments();
+    //fetchPayments();
   }, []);
   console.log(item, "item");
   // const total = useRef()
@@ -101,7 +102,7 @@ export const ItemDetails = () => {
         },
       },
     });
-    fetchPayments();
+    fetchByID();
     // console.log(allPaidaMount, "allpau");
     // console.log(
     //   allPaidaMount?.reduce((a, b) => a + b.amountPaid, 0),
@@ -148,6 +149,7 @@ export const ItemDetails = () => {
     //     allPaidaMount?.reduce((a, b) => a + b.amountPaid, 0)
     // );
     // fetchPayments();
+    fetchByID();
   };
 
   const updatePaymentById = async (id) => {
@@ -162,7 +164,7 @@ export const ItemDetails = () => {
       },
     }).then(() => {
       //update total
-      fetchPayments();
+      fetchByID();
     });
   };
 
