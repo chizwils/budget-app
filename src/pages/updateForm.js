@@ -1,7 +1,19 @@
 import { useState } from "react";
 
-export const UpdateForm = ({ currentState, onChange, update, deleteThis }) => {
+// enum kind={
+
+// }
+
+export const UpdateForm = ({
+  currentState,
+  onChange,
+  update,
+  deleteThis,
+  kind,
+  itemName,
+}) => {
   const [isVisible, setIsVisible] = useState(false);
+
   const toggle = () => {
     setIsVisible(!isVisible);
   };
@@ -13,7 +25,16 @@ export const UpdateForm = ({ currentState, onChange, update, deleteThis }) => {
             onChange={onChange}
             placeholder={`update $${currentState}`}
             type="text"
+            name="initialAmountOwed"
           />
+          {kind === "debt" ? (
+            <input
+              onChange={onChange}
+              placeholder={`update $${itemName}`}
+              type="text"
+              name="name"
+            />
+          ) : null}
           <button onClick={update}>update</button>
           <button onClick={toggle}>Done</button>
         </>

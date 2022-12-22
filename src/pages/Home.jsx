@@ -1,14 +1,19 @@
 import React, { useState } from "react";
 import { API } from "aws-amplify";
-import { createDebt, deleteDebt } from "../graphql/mutations";
+import { createDebt, deleteDebt, updateDebt } from "../graphql/mutations";
 import { listDebts } from "../graphql/queries";
 import { Link } from "react-router-dom";
 import { useEffect } from "react";
+import { UpdateForm } from "./updateForm";
 //create a redux to store all
 
 export const Home = () => {
   const [state, setState] = useState();
   const [bill, setBill] = useState({ name: "", initialAmountOwed: "" });
+  const [updateBill, setUpdateBill] = useState({
+    name: "",
+    initialAmountOwed: "",
+  });
 
   const onChange = (e) => {
     setBill({ ...bill, [e.target.name]: e.target.value });
@@ -18,35 +23,6 @@ export const Home = () => {
     return date.toString();
   };
 
-  //create a debt
-  // async function createNote(event) {
-  //     event.preventDefault();
-  //     const form = new FormData(event.target);
-  //     const data = {
-  //       name: form.get("name"),
-  //       description: form.get("description"),
-  //     };
-  //     await API.graphql({
-  //       query: createNoteMutation,
-  //       variables: { input: data },
-  //     });
-  //     fetchNotes();
-  //     event.target.reset();
-  //   }
-  // }
-  // const newDebt = await API.graphql({
-  //     query: createDebt,
-  //     variables: {
-  //         input: {
-  // 		"name": "Lorem ipsum dolor sit amet",
-  // 		"createdAt": "Lorem ipsum dolor sit amet",
-  // 		"currentAmountOwed": 123.45,
-  // 		"initialAmountOwed": 123.45,
-  // 		"isPaidOf": true,
-  // 		"payments": []
-  // 	}
-  //     }
-  // });
   useEffect(() => {
     listingDebts();
   }, []);
@@ -56,17 +32,12 @@ export const Home = () => {
     setState(apiData.data.listDebts.items);
     console.log(state);
   };
-
-  const todoDetails = {
-    id: "some_id",
+  const onChangeEdit = (e) => {
+    setUpdateBill({ ...updateBill, [e.target.name]: e.target.value });
   };
-
-  //const deletedTodo = await API.graphql({ query: mudeleteTodo, variables: {input: todoDetails}});
-
+  console.log(updateBill, "update bill");
   const handleClick = async (e) => {
     e.preventDefault();
-    // setState([...state, bill])
-    setBill({ bill: "", price: "" });
     await API.graphql({
       query: createDebt,
       variables: {
@@ -75,16 +46,16 @@ export const Home = () => {
           createdAt: dateFormatter(Date.now()),
           currentAmountOwed: bill.initialAmountOwed,
           initialAmountOwed: bill.initialAmountOwed,
-          isPaidOf: true,
-          payments: [],
+          isPaidOf: false,
         },
       },
-    });
+    }).then(() => setBill({ bill: "", price: "" }));
     listingDebts();
     e.target.reset();
   };
   console.log(bill);
-  const updateAmount = (id) => {
+
+  const update = async (id) => {
     console.log(id, "po");
     // const newItem = state.map((item) => {
     //   if (item.id === id) {
@@ -98,8 +69,18 @@ export const Home = () => {
 
     // });
     // setState(newItem);
+    await API.graphql({
+      query: updateDebt,
+      variables: {
+        input: {
+          id: id,
+          initialAmountOwed: updateBill.initialAmountOwed,
+          name: updateBill.name,
+        },
+      },
+    }).then(() => listingDebts());
   };
-  const deletingDebt = async (id) => {
+  const delDebt = async (id) => {
     console.log(id, "op");
     await API.graphql({
       query: deleteDebt,
@@ -130,7 +111,7 @@ export const Home = () => {
 
       <div>
         {state &&
-          state.map((item) => {
+          state.map((item, idx) => {
             return (
               <>
                 <Link to={`/company/${item.id}`}>
@@ -138,16 +119,15 @@ export const Home = () => {
                   <div>{item.name}</div>
                   <div>{item.initialAmountOwed}</div>
                 </Link>
-
-                <input
-                  onChange={onChange}
-                  placeholder={`update $${item.initialAmountOwed}`}
-                  type="text"
-                />
-                <button>update</button>
-                <div>
-                  <button onClick={() => updateAmount(item.id)}>edit</button>
-                  <button onClick={() => deletingDebt(item.id)}>delete</button>
+                <div key={`${item.id}-${idx}`}>
+                  <UpdateForm
+                    kind={"debt"}
+                    itemName={item.name}
+                    onChange={onChangeEdit}
+                    currentState={item.initialAmountOwed}
+                    update={() => update(item.id)}
+                    deleteThis={() => delDebt(item.id)}
+                  />
                 </div>
 
                 <hr></hr>
