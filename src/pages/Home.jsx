@@ -57,18 +57,7 @@ export const Home = () => {
 
   const update = async (id) => {
     console.log(id, "po");
-    // const newItem = state.map((item) => {
-    //   if (item.id === id) {
-    //     const updateItem = {
-    //       ...item,
-    //       isComplete: item.isComplete,
-    //     };
-    //     return updateItem;
-    //   }
-    //   return newItem;
 
-    // });
-    // setState(newItem);
     await API.graphql({
       query: updateDebt,
       variables: {
@@ -88,7 +77,7 @@ export const Home = () => {
     });
     listingDebts();
   };
-  //console.log(state);
+
   return (
     <div>
       <form onSubmit={handleClick}>
@@ -118,6 +107,7 @@ export const Home = () => {
                   {" "}
                   <div>{item.name}</div>
                   <div>{item.initialAmountOwed}</div>
+                  <div>{item.currentAmountOwed}</div>
                 </Link>
                 <div key={`${item.id}-${idx}`}>
                   <UpdateForm

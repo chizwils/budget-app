@@ -103,35 +103,7 @@ export const ItemDetails = () => {
       },
     });
     fetchByID();
-    // console.log(allPaidaMount, "allpau");
-    // console.log(
-    //   allPaidaMount?.reduce((a, b) => a + b.amountPaid, 0),
-    //   "all"
-    // );
-    // setTotal(
-    //   info?.initialAmountOwed -
-    //     allPaidaMount?.reduce((a, b) => a + b.amountPaid, 0)
-    // );
-    // fetchPayments();
-    // console.log(total, "total");
 
-    // }).then(() => {
-    //   //update currentamountowed with totalremainging
-
-    //   fetchPayments();
-    //   setTotal(
-    //     info?.initialAmountOwed -
-    //       allPaidaMount?.reduce((a, b) => a + b.amountPaid, 0)
-    //   );
-    // });
-    // .then(() =>
-    //   setTotal(
-    //     info?.initialAmountOwed -
-    //       allPaidaMount?.reduce((a, b) => a + b.amountPaid, 0)
-    //   )
-    // );
-
-    // fetchByID();
     setPaid("");
   };
   const deletePayment = async (id) => {
@@ -143,12 +115,6 @@ export const ItemDetails = () => {
         },
       },
     });
-    // fetchPayments();
-    // setTotal(
-    //   info?.initialAmountOwed -
-    //     allPaidaMount?.reduce((a, b) => a + b.amountPaid, 0)
-    // );
-    // fetchPayments();
     fetchByID();
   };
 
@@ -195,6 +161,8 @@ export const ItemDetails = () => {
                 update={() => updatePaymentById(item.id)}
                 deleteThis={() => deletePayment(item.id)}
               />
+              <div>{item.createdAt}</div>
+              <div>{item.updatedAt}</div>
             </div>
           );
         })}
