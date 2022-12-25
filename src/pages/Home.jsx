@@ -5,6 +5,8 @@ import { listDebts } from "../graphql/queries";
 import { Link } from "react-router-dom";
 import { useEffect } from "react";
 import { UpdateForm } from "./updateForm";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchAllDebt } from "../store/debtSlice";
 //create a redux to store all
 
 export const Home = () => {
@@ -14,6 +16,9 @@ export const Home = () => {
     name: "",
     initialAmountOwed: "",
   });
+  const debt = useSelector((state) => state.debt.debts.data.listDebts.items);
+  const dispatch = useDispatch();
+  console.log(debt, "debts");
 
   const onChange = (e) => {
     setBill({ ...bill, [e.target.name]: e.target.value });
@@ -24,7 +29,8 @@ export const Home = () => {
   };
 
   useEffect(() => {
-    listingDebts();
+    //listingDebts();
+    dispatch(fetchAllDebt());
   }, []);
   const listingDebts = async () => {
     const apiData = await API.graphql({ query: listDebts });
@@ -78,8 +84,20 @@ export const Home = () => {
     listingDebts();
   };
 
+  const mock = {
+    id: 1,
+    status: "none",
+  };
+
   return (
     <div>
+      {/* <button
+        onClick={() => {
+          dispatch(crDebt(mock));
+        }}
+      >
+        dispatch{" "}
+      </button> */}
       <form onSubmit={handleClick}>
         <input
           onChange={onChange}
@@ -99,8 +117,8 @@ export const Home = () => {
       <h1>List of bills and prices</h1>
 
       <div>
-        {state &&
-          state.map((item, idx) => {
+        {debt &&
+          debt.map((item, idx) => {
             return (
               <>
                 <Link to={`/company/${item.id}`}>
