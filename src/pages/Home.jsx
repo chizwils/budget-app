@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import { useEffect } from "react";
 import { UpdateForm } from "./updateForm";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchAllDebt } from "../store/debtSlice";
+import { fetchAllDebt, addNewDebt, debtSelector } from "../store/debtSlice";
 //create a redux to store all
 
 export const Home = () => {
@@ -16,7 +16,8 @@ export const Home = () => {
     name: "",
     initialAmountOwed: "",
   });
-  const debt = useSelector((state) => state.debt.debts.data.listDebts.items);
+  const debt = useSelector((state) => state.debt.debts?.data?.listDebts.items);
+  //const debt = useSelector(debtSelector);
   const dispatch = useDispatch();
   console.log(debt, "debts");
 
@@ -31,7 +32,7 @@ export const Home = () => {
   useEffect(() => {
     //listingDebts();
     dispatch(fetchAllDebt());
-  }, []);
+  }, [dispatch]);
   const listingDebts = async () => {
     const apiData = await API.graphql({ query: listDebts });
     console.log(apiData.data.listDebts.items, "hois");
@@ -43,20 +44,22 @@ export const Home = () => {
   };
   console.log(updateBill, "update bill");
   const handleClick = async (e) => {
+    dispatch(addNewDebt(bill));
     e.preventDefault();
-    await API.graphql({
-      query: createDebt,
-      variables: {
-        input: {
-          name: bill.name,
-          createdAt: dateFormatter(Date.now()),
-          currentAmountOwed: bill.initialAmountOwed,
-          initialAmountOwed: bill.initialAmountOwed,
-          isPaidOf: false,
-        },
-      },
-    }).then(() => setBill({ bill: "", price: "" }));
-    listingDebts();
+    // await API.graphql({
+    //   query: createDebt,
+    //   variables: {
+    //     input: {
+    //       name: bill.name,
+    //       createdAt: dateFormatter(Date.now()),
+    //       currentAmountOwed: bill.initialAmountOwed,
+    //       initialAmountOwed: bill.initialAmountOwed,
+    //       isPaidOf: false,
+    //     },
+    //   },
+    // }).then(() => setBill({ bill: "", price: "" }));
+    setBill({ bill: "", price: "" });
+    dispatch(fetchAllDebt());
     e.target.reset();
   };
   console.log(bill);
