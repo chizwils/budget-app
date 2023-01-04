@@ -25,3 +25,12 @@ export const addDebt = async (bill) => {
     },
   });
 };
+export const delDebt = async (id) => {
+  console.log(id, "op");
+  const delItem = await API.graphql({
+    query: deleteDebt,
+    variables: { input: { id: id } },
+  });
+  console.log(delItem, "del");
+  return delItem;
+};

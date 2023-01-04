@@ -1,16 +1,15 @@
 import React, { useState } from "react";
 import { API } from "aws-amplify";
-import { createDebt, deleteDebt, updateDebt } from "../graphql/mutations";
+import { createDebt, updateDebt } from "../graphql/mutations";
 import { listDebts } from "../graphql/queries";
 import { Link } from "react-router-dom";
 import { useEffect } from "react";
 import { UpdateForm } from "./updateForm";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchAllDebt, addNewDebt, debtSelector } from "../store/debtSlice";
+import { fetchAllDebt, addNewDebt, deleteDebt } from "../store/debtSlice";
 //create a redux to store all
 
 export const Home = () => {
-  const [state, setState] = useState();
   const [bill, setBill] = useState({ name: "", initialAmountOwed: "" });
   const [updateBill, setUpdateBill] = useState({
     name: "",
@@ -33,31 +32,14 @@ export const Home = () => {
     //listingDebts();
     dispatch(fetchAllDebt());
   }, [dispatch]);
-  const listingDebts = async () => {
-    const apiData = await API.graphql({ query: listDebts });
-    console.log(apiData.data.listDebts.items, "hois");
-    setState(apiData.data.listDebts.items);
-    console.log(state);
-  };
+
   const onChangeEdit = (e) => {
     setUpdateBill({ ...updateBill, [e.target.name]: e.target.value });
   };
-  console.log(updateBill, "update bill");
+  //console.log(updateBill, "update bill");
   const handleClick = async (e) => {
     dispatch(addNewDebt(bill));
     e.preventDefault();
-    // await API.graphql({
-    //   query: createDebt,
-    //   variables: {
-    //     input: {
-    //       name: bill.name,
-    //       createdAt: dateFormatter(Date.now()),
-    //       currentAmountOwed: bill.initialAmountOwed,
-    //       initialAmountOwed: bill.initialAmountOwed,
-    //       isPaidOf: false,
-    //     },
-    //   },
-    // }).then(() => setBill({ bill: "", price: "" }));
     setBill({ bill: "", price: "" });
     dispatch(fetchAllDebt());
     e.target.reset();
@@ -67,24 +49,13 @@ export const Home = () => {
   const update = async (id) => {
     console.log(id, "po");
 
-    await API.graphql({
-      query: updateDebt,
-      variables: {
-        input: {
-          id: id,
-          initialAmountOwed: updateBill.initialAmountOwed,
-          name: updateBill.name,
-        },
-      },
-    }).then(() => listingDebts());
+    dispatch(deleteDebt(id));
+    dispatch(fetchAllDebt());
   };
   const delDebt = async (id) => {
     console.log(id, "op");
-    await API.graphql({
-      query: deleteDebt,
-      variables: { input: { id: id } },
-    });
-    listingDebts();
+    dispatch(deleteDebt(id));
+    dispatch(fetchAllDebt());
   };
 
   const mock = {
@@ -94,13 +65,6 @@ export const Home = () => {
 
   return (
     <div>
-      {/* <button
-        onClick={() => {
-          dispatch(crDebt(mock));
-        }}
-      >
-        dispatch{" "}
-      </button> */}
       <form onSubmit={handleClick}>
         <input
           onChange={onChange}
@@ -116,7 +80,6 @@ export const Home = () => {
         />
         <button>Add</button>
       </form>
-      <button onClick={listingDebts}>List notes</button>
       <h1>List of bills and prices</h1>
 
       <div>

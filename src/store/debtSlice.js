@@ -3,7 +3,7 @@ import {
   createAsyncThunk,
   createSelector,
 } from "@reduxjs/toolkit";
-import { fetchDebt, addDebt } from "../api/debtApi";
+import { fetchDebt, addDebt, delDebt } from "../api/debtApi";
 
 export const fetchAllDebt = createAsyncThunk(
   "debt/fetchAllDebt",
@@ -24,6 +24,19 @@ export const addNewDebt = createAsyncThunk(
   async (bill, { rejectWithValue }) => {
     try {
       const list = await addDebt(bill);
+      return list;
+    } catch (err) {
+      return rejectWithValue([], err);
+    }
+  }
+);
+
+export const deleteDebt = createAsyncThunk(
+  "debt/deleteDebt",
+  async (id, { rejectWithValue }) => {
+    try {
+      const list = await delDebt(id);
+      console.log(list, "delete");
       return list;
     } catch (err) {
       return rejectWithValue([], err);
@@ -74,6 +87,25 @@ const { actions, reducer } = createSlice({
       state.loading = "pending";
     },
     [addNewDebt.rejected]: (state, { meta, payload, error }) => {
+      if (state.currentRequestId === meta) {
+        state.currentRequestId = meta;
+        state.loading = "fin";
+        state.debts = payload;
+        state.error = error;
+      }
+    },
+    [deleteDebt.fulfilled]: (state, { meta, payload }) => {
+      if (meta.requestId === state.currentRequestId.requestId) {
+        state.debts = payload;
+        state.loading = "fin";
+        state.currentRequestId = "";
+      }
+    },
+    [deleteDebt.pending]: (state, { meta }) => {
+      state.currentRequestId = meta;
+      state.loading = "pending";
+    },
+    [deleteDebt.rejected]: (state, { meta, payload, error }) => {
       if (state.currentRequestId === meta) {
         state.currentRequestId = meta;
         state.loading = "fin";
