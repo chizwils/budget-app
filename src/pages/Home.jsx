@@ -23,10 +23,6 @@ export const Home = () => {
   const onChange = (e) => {
     setBill({ ...bill, [e.target.name]: e.target.value });
   };
-  const dateFormatter = (curr) => {
-    const date = new Date(curr);
-    return date.toString();
-  };
 
   useEffect(() => {
     //listingDebts();
@@ -40,7 +36,7 @@ export const Home = () => {
   const handleClick = async (e) => {
     dispatch(addNewDebt(bill));
     e.preventDefault();
-    setBill({ bill: "", price: "" });
+    setBill({ name: "", initialAmountOwed: "" });
     dispatch(fetchAllDebt());
     e.target.reset();
   };

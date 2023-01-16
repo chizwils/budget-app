@@ -12,7 +12,7 @@ export const fetchDebt = async () => {
 };
 
 export const addDebt = async (bill) => {
-  await API.graphql({
+  const apiData = await API.graphql({
     query: createDebt,
     variables: {
       input: {
@@ -24,6 +24,7 @@ export const addDebt = async (bill) => {
       },
     },
   });
+  return apiData;
 };
 export const delDebt = async (id) => {
   console.log(id, "op");
