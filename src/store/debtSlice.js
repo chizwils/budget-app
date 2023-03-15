@@ -9,6 +9,7 @@ export const fetchAllDebt = createAsyncThunk(
   "debt/fetchAllDebt",
   async (_, { rejectWithValue }) => {
     try {
+      //console.log("here i am");
       const list = await fetchDebt();
       console.log("im here too", list);
       return list;
@@ -36,8 +37,8 @@ export const deleteDebt = createAsyncThunk(
   async (id, { rejectWithValue }) => {
     try {
       const list = await delDebt(id);
-      console.log(list, "delete");
-      return list;
+      console.log(list?.data?.deleteDebt?.id, "delete");
+      return list?.data?.deleteDebt?.id;
     } catch (err) {
       return rejectWithValue([], err);
     }
@@ -59,6 +60,7 @@ const { actions, reducer } = createSlice({
 
       if (meta.requestId === state.currentRequestId.requestId) {
         state.debts = payload;
+
         state.loading = "fin";
         state.currentRequestId = "";
       }
@@ -95,11 +97,13 @@ const { actions, reducer } = createSlice({
       }
     },
     [deleteDebt.fulfilled]: (state, { meta, payload }) => {
-      if (meta.requestId === state.currentRequestId.requestId) {
-        state.debts = payload;
-        state.loading = "fin";
-        state.currentRequestId = "";
-      }
+      //if (meta.requestId === state.currentRequestId.requestId) {
+      console.log(payload, state, "payload");
+      state.debts = state?.debts?.filter((item) => item.id !== payload);
+
+      state.loading = "fin";
+      state.currentRequestId = "";
+      //}
     },
     [deleteDebt.pending]: (state, { meta }) => {
       state.currentRequestId = meta;

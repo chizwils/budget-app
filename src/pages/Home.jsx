@@ -54,13 +54,15 @@ export const Home = () => {
     dispatch(fetchAllDebt());
   };
 
-  const mock = {
-    id: 1,
-    status: "none",
-  };
-
   return (
     <div>
+      {/* <svg viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg">
+        <rect x="10" y="10" width="80" height="80" fill="#000000" />
+        <text x="50" y="55" font-size="40" text-anchor="middle" fill="#ffffff">
+          rd3studio
+        </text>
+      </svg> */}
+
       <form onSubmit={handleClick}>
         <input
           onChange={onChange}
@@ -82,7 +84,7 @@ export const Home = () => {
         {debt &&
           debt.map((item, idx) => {
             return (
-              <>
+              <React.Fragment key={`${item.id}-${idx}`}>
                 <Link to={`/company/${item.id}`}>
                   {" "}
                   <div>{item.name}</div>
@@ -101,7 +103,7 @@ export const Home = () => {
                 </div>
 
                 <hr></hr>
-              </>
+              </React.Fragment>
             );
           })}
       </div>
